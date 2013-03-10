@@ -3,12 +3,78 @@
   <head>
     <title>unbound.IO</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+      }
+      .container-narrow > hr {
+        margin: 20px 0;
+      }
+
+      .jumbotron {
+        margin: 30px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 20px;
+        padding: 12px 28px;
+      }
+
+      .repos {
+        margin: 60px 0;
+      }
+      .repos p + h4 {
+        margin-top: 24px;
+      }
+    </style>
   </head>
   <body>
-    <h1>unbound.IO</h1>
-    <script src="http://code.jquery.com/jquery.js"></script>
+    <div class="container-narrow">
+      <div class="masthead">
+        <ul class="nav nav-pills">
+          <li><a href="http://unbound.io/">Blog</a></li>
+        </ul>
+      </div>
+      <hr>
+      <div class="jumbotron">
+        <h1>unbound.IO</h1>
+        <p class="lead"><i>My open source repositories ...</i></p>
+        <a class="btn btn-large btn-success" href="https://github.com/unboundio" title="unbound.IO on GitHub">Go to GitHub</a>
+      </div>
+      <hr>
+      <div class="row-fluid repos">
+        <div class="span6">
+          <h4><a href="https://github.com/unboundio/safe_ptr" title="safe_ptr on GitHub">safe_ptr</a></h4>
+          <p>A smart pointer with some reference guarantees.</p>
+        </div>
+        <div class="span6">
+          <h4><a href="https://github.com/unboundio/unboundio.github.com" title="unboundio.github.com on GitHub">unboundio.github.com</a></h4>
+          <p>Sources for this Bootstrap based GitHub page.</p>
+        </div>
+      </div>
+      <hr>
+      <div class="footer pull-right">
+        <p>Powered by <a href="https://github.com/" title="GitHub">GitHub</a> and <a href="http://twitter.github.com/bootstrap/" title="Bootstrap">Bootstrap</a></p>
+      </div>
+    </div>
+    <script src="js/jquery-1.9.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $.getJSON("https://api.github.com/users/unboundio/repos?", function (result) {
+          var repos = result.data;
+
+          repos.forEach(function (repo) {
+            alert(repo.description);
+          })
+        });
+      });
+    </script>
   </body>
 </html>
