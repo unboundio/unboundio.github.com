@@ -67,7 +67,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
-        $.getJSON("https://api.github.com/users/unboundio/repos?", function (result) {
+        $.getJSON("https://api.github.com/users/unboundio/repos?callback=repos", function (result) {
           var repos = result.data;
 
           repos.forEach(function (repo) {
