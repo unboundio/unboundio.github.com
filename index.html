@@ -80,8 +80,10 @@
               row = newRow();
             }
 
+            var url = (repo.name == "unboundio.github.com" ? repo.html_url : repo.homepage);
+
             var column = $("<div>").addClass("span6");
-            column.append($("<h4>").append($("<a>").attr("href", repo.html_url).attr("title", repo.name + " on GitHub").text(repo.name)));
+            column.append($("<h4>").append($("<a>").attr("href", url).attr("title", repo.name + " on GitHub").text(repo.name)));
             column.append($("<p>").text(repo.description));
             column.append($("<p>").addClass("muted").append($("<small>").text(repo.language + ", " + strftime(repo.pushed_at))));
             column.appendTo(row);
