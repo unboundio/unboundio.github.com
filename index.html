@@ -59,6 +59,12 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
+        var strftime = function(raw) {
+          var months = ["January", "February", "March", "April", "June", "July", "August", "September", "October", "November", "December"];
+          var date = new Date(Date.parse(raw));
+          return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
+        }
+
         $.getJSON("https://api.github.com/users/unboundio/repos?", function (repos) {
           var newRow = function() { return $("<div>").addClass("row-fluid repos"); }
           var appendRow = function(row) { row.appendTo("#repos"); }
@@ -77,8 +83,9 @@
             var column = $("<div>").addClass("span6");
             column.append($("<h4>").append($("<a>").attr("href", repo.html_url).attr("title", repo.name + " on GitHub").text(repo.name)));
             column.append($("<p>").text(repo.description));
+            column.append($("<p>").addClass("muted").append($("<small>").text(repo.language + ", " + strftime(repo.pushed_at))));
             column.appendTo(row);
-            
+
             ++columnIndex;
           });
 
