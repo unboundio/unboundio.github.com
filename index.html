@@ -48,15 +48,7 @@
         <a class="btn btn-large btn-success" href="https://github.com/unboundio" title="unbound.IO on GitHub">Go to GitHub</a>
       </div>
       <hr>
-      <div class="row-fluid repos">
-        <div class="span6">
-          <h4><a href="https://github.com/unboundio/safe_ptr" title="safe_ptr on GitHub">safe_ptr</a></h4>
-          <p>A smart pointer with some reference guarantees.</p>
-        </div>
-        <div class="span6">
-          <h4><a href="https://github.com/unboundio/unboundio.github.com" title="unboundio.github.com on GitHub">unboundio.github.com</a></h4>
-          <p>Sources for this Bootstrap based GitHub page.</p>
-        </div>
+      <div id="repos">
       </div>
       <hr>
       <div class="footer pull-right">
@@ -68,9 +60,31 @@
     <script type="text/javascript">
       $(document).ready(function() {
         $.getJSON("https://api.github.com/users/unboundio/repos?", function (repos) {
+          var newRow = function() { return $("<div>").addClass("row-fluid repos"); }
+          var appendRow = function(row) { row.appendTo("#repos"); }
+
+          var columnIndex = 0;
+          var row = newRow();
+
           repos.forEach(function (repo) {
-            alert(repo.description);
-          })
+            if (columnIndex == 2) {
+              appendRow(row);
+
+              columnIndex = 0;
+              row = newRow();
+            }
+
+            var column = $("<div>").addClass("span6");
+            column.append($("<h4>").append($("<a>").attr("href", repo.html_url).attr("title", repo.name + " on GitHub").text(repo.name)));
+            column.append($("<p>").text(repo.description));
+            column.appendTo(row);
+            
+            ++columnIndex;
+          });
+
+          if (columnIndex > 0) {
+            appendRow(row);
+          }
         });
       });
     </script>
